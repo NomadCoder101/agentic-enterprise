@@ -214,7 +214,7 @@ except the Ollama models you pulled (remove them with: ollama rm <model>).
 
 ## License
 
-MIT (or your chosen license).
+MIT.
 
 ## Support
 
