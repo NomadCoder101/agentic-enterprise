@@ -1,0 +1,26 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Backups and artifacts
+*.tar.gz
+*.zip
+*.pre-param-*
+*.bak
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local test vaults
+/test-vault/
+/tmp/

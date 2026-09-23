@@ -1,0 +1,216 @@
+version: 1.0
+effective: 2026-04-12
+owner: {{OWNER_HANDLE}}
+description: >
+  Machine-readable cross-domain access policy. The Communication Agent
+  evaluates every cross-domain request against this file. Rules are
+  evaluated top-down; first match wins.
+
+defaults:
+  cross_domain_read: deny
+  cross_domain_write: deny
+  escalation_sla_hours: 72
+  on_timeout: deny
+  log_all: true
+
+domains:
+  personal:
+    path: "01_Personal"
+    sensitivity: private
+  client:
+    path: "02_Client"
+    sensitivity: confidential
+  venture:
+    path: "03_Venture"
+    sensitivity: proprietary
+  shared:
+    path: "04_Shared"
+    sensitivity: internal
+  communication:
+    path: "00_Communication"
+    sensitivity: internal
+
+rules:
+
+  # --- HARD DENIES (air-gapped domains) ---
+  - id: client-to-venture
+    from: client
+    to: venture
+    action: read
+    verdict: deny
+    reason: "Client and Venture domains are air-gapped."
+
+  - id: venture-to-client
+    from: venture
+    to: client
+    action: read
+    verdict: deny
+    reason: "Client and Venture domains are air-gapped."
+
+  - id: nobody-writes-personal
+    from: "*"
+    to: personal
+    action: write
+    verdict: deny
+    reason: "Personal domain is write-protected for all agents."
+
+  - id: nobody-writes-governance
+    from: "*"
+    to: shared
+    resource: "04_Shared/00_Governance/**"
+    action: write
+    verdict: deny
+    reason: "Governance is immutable except by NomadCoder."
+
+  # --- AUTO-APPROVALS (routine, pre-authorized) ---
+
+  - id: any-reads-shared-capabilities
+    from: "*"
+    to: shared
+    resource: "04_Shared/20_Capabilities/**"
+    action: read
+    verdict: auto_approve
+    reason: "Capabilities are shared playbooks available to all domains."
+
+  - id: any-reads-shared-knowledge
+    from: "*"
+    to: shared
+    resource: "04_Shared/40_Knowledge/**"
+    action: read
+    verdict: auto_approve
+    reason: "Knowledge is non-sensitive, cross-domain reference material."
+
+  - id: any-reads-shared-strategy
+    from: "*"
+    to: shared
+    resource: "04_Shared/10_Strategy/**"
+    action: read
+    verdict: auto_approve
+    reason: "Strategy is transparent across all domains."
+
+  - id: audit-reads-client
+    from: audit
+    to: client
+    action: read
+    verdict: auto_approve
+    reason: "Audit has pre-authorized read access to client work."
+
+  - id: audit-reads-venture
+    from: audit
+    to: venture
+    action: read
+    verdict: auto_approve
+    reason: "Audit has pre-authorized read access to venture work."
+
+  - id: audit-reads-shared
+    from: audit
+    to: shared
+    action: read
+    verdict: auto_approve
+    reason: "Audit has pre-authorized read access."
+
+  # --- ESCALATIONS (NomadCoder decides) ---
+
+  - id: personal-reads-client-deliverable
+    from: personal
+    to: client
+    resource: "02_Client/60_Engagements/*/10_Projects/**"
+    action: read
+    verdict: escalate
+    redact:
+      - "**/financials/**"
+      - "**/contracts/**"
+      - "**/_private/**"
+    reason: "Founder learning from client work — case by case."
+
+  - id: personal-reads-client-general
+    from: personal
+    to: client
+    resource: "02_Client/**"
+    action: read
+    verdict: escalate
+    redact:
+      - "**/financials/**"
+      - "**/contracts/**"
+      - "**/_private/**"
+    reason: "Personal-domain reads of client material require approval."
+
+  - id: personal-reads-venture-product
+    from: personal
+    to: venture
+    resource: "03_Venture/60_Ventures/*/10_Product/**"
+    action: read
+    verdict: escalate
+    redact:
+      - "**/financials/**"
+      - "**/roadmap/**"
+    reason: "Founder learning from internal ventures — case by case."
+
+  - id: personal-reads-venture-general
+    from: personal
+    to: venture
+    resource: "03_Venture/**"
+    action: read
+    verdict: escalate
+    redact:
+      - "**/financials/**"
+      - "**/roadmap/**"
+    reason: "Personal-domain reads of venture material require approval."
+
+  - id: client-reads-venture-any
+    from: client
+    to: venture
+    action: read
+    verdict: deny
+    reason: "Client domain must never read venture material."
+
+  - id: venture-reads-client-any
+    from: venture
+    to: client
+    action: read
+    verdict: deny
+    reason: "Venture domain must never read client material."
+
+  # --- COMMUNICATION DOMAIN RULES ---
+
+  - id: comms-receives-from-all
+    from: "*"
+    to: communication
+    resource: "00_Communication/10_Inbox_From_Domains/**"
+    action: write
+    verdict: auto_approve
+    reason: "Domains may always write reports to their own inbox folder."
+
+  - id: comms-requests-from-all
+    from: "*"
+    to: communication
+    resource: "00_Communication/30_Access_Requests/Pending/**"
+    action: write
+    verdict: auto_approve
+    reason: "Any agent may submit an access request."
+
+rate_limits:
+  per_domain_per_hour: 20
+  per_agent_per_day: 10
+  escalate_after_exceeded: true
+
+redaction:
+  default_markers:
+    - "**/_private/**"
+    - "**/secrets/**"
+    - "**/.env"
+    - "**/*.key"
+    - "**/*.pem"
+
+logging:
+  log_all_requests: true
+  log_payloads: false
+  retention_days: 365
+  master_log_path: "00_Communication/40_Access_Log/master"
+
+notifications:
+  on_auto_approve: false
+  on_auto_deny: true
+  on_escalate: true
+  daily_digest_time: "08:00"
+  digest_channel: "00_Communication/00_Agent/Daily_Digest"

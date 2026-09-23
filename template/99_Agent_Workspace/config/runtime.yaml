@@ -1,0 +1,127 @@
+version: 1.0
+owner: {{OWNER_HANDLE}}
+effective: 2026-04-12
+description: >
+  Runtime configuration for the {{OWNER_NAME}} enterprise agent system.
+  Read by Hermes / the scheduler / any executor. Defines models, permissions,
+  paths, write scopes, and read scopes per agent role.
+
+ollama:
+  host: http://localhost:11434
+  models:
+    default:    {{PRIMARY_MODEL}}
+    reasoning:  {{REASONING_MODEL}}
+    coding:     {{CODING_MODEL}}
+    embeddings: {{EMBEDDING_MODEL}}
+  timeouts:
+    generate_seconds: 120
+    embed_seconds: 30
+
+permissions:
+  PAID_MODELS_ALLOWED: false
+  NETWORK_EGRESS_ALLOWED: false
+  FILE_WRITE_ALLOWED: true
+  DELETE_ALLOWED: false
+  SHELL_EXEC_ALLOWED: false
+  MAX_NOTES_PER_RUN: 5
+
+paths:
+  vault: {{VAULT_PATH}}
+  communication: 00_Communication
+  personal: 01_Personal
+  client: 02_Client
+  venture: 03_Venture
+  shared: 04_Shared
+  runtime: 99_Agent_Workspace
+  master_log: 00_Communication/40_Access_Log/master
+
+write_scope:
+  communication-agent:
+    - "00_Communication/**"
+    - "99_Agent_Workspace/**"
+  personal-ceo:
+    - "01_Personal/**"
+    - "00_Communication/10_Inbox_From_Domains/Personal/**"
+    - "99_Agent_Workspace/**"
+  client-ceo:
+    - "02_Client/**"
+    - "00_Communication/10_Inbox_From_Domains/Client/**"
+    - "99_Agent_Workspace/**"
+  venture-ceo:
+    - "03_Venture/**"
+    - "00_Communication/10_Inbox_From_Domains/Venture/**"
+    - "99_Agent_Workspace/**"
+  audit-lead:
+    - "04_Shared/50_Audit/**"
+    - "00_Communication/50_Notifications/**"
+
+read_scope:
+  communication-agent:
+    - "00_Communication/**"
+    - "01_Personal/**"
+    - "02_Client/**"
+    - "03_Venture/**"
+    - "04_Shared/**"
+    - "99_Agent_Workspace/**"
+  personal-ceo:
+    - "01_Personal/**"
+    - "01_Personal/_Inbound/**"
+    - "04_Shared/20_Capabilities/**"
+    - "04_Shared/40_Knowledge/**"
+    - "04_Shared/10_Strategy/**"
+    - "99_Agent_Workspace/**"
+  client-ceo:
+    - "02_Client/**"
+    - "02_Client/_Inbound/**"
+    - "04_Shared/20_Capabilities/**"
+    - "04_Shared/40_Knowledge/**"
+    - "04_Shared/10_Strategy/**"
+    - "99_Agent_Workspace/**"
+  venture-ceo:
+    - "03_Venture/**"
+    - "03_Venture/_Inbound/**"
+    - "04_Shared/20_Capabilities/**"
+    - "04_Shared/40_Knowledge/**"
+    - "04_Shared/10_Strategy/**"
+    - "99_Agent_Workspace/**"
+  audit-lead:
+    - "02_Client/**"
+    - "03_Venture/**"
+    - "04_Shared/**"
+    - "00_Communication/**"
+    - "99_Agent_Workspace/**"
+
+forbidden_paths:
+  - "01_Personal/**"
+  - "04_Shared/00_Governance/**"
+  - "**/.env"
+  - "**/*.key"
+  - "**/*.pem"
+  - "**/secrets/**"
+
+logging:
+  master_log: "00_Communication/40_Access_Log/master"
+  log_all_writes: true
+  log_all_reads: false
+  log_cross_domain_requests: true
+  retention_days: 365
+
+escalation:
+  default_sla_hours: 72
+  on_timeout: deny
+  notify_on:
+    - p0
+    - p1
+    - "#escalation"
+    - "#audit-flag"
+    - "#access/escalated"
+
+scheduler:
+  enabled: false
+  timezone: "local"
+  jobs:
+    daily_digest:   { cron: "0 8 * * *" }
+    domain_ceos:    { cron: "0 17 * * *" }
+    ceo_synthesis:  { cron: "0 18 * * *" }
+    weekly_reports: { cron: "0 19 * * 0" }
+    monthly_report: { cron: "0 19 1 * *" }
