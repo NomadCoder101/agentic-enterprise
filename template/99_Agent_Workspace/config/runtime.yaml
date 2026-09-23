@@ -14,8 +14,8 @@ ollama:
     coding:     {{CODING_MODEL}}
     embeddings: {{EMBEDDING_MODEL}}
   timeouts:
-    generate_seconds: 120
-    embed_seconds: 30
+    generate_seconds: 600
+    embed_seconds: 60
 
 permissions:
   PAID_MODELS_ALLOWED: false
@@ -65,6 +65,7 @@ read_scope:
     - "99_Agent_Workspace/**"
   personal-ceo:
     - "01_Personal/**"
+    - "00_Communication/20_Outbox_To_Domains/Personal/**"
     - "01_Personal/_Inbound/**"
     - "04_Shared/20_Capabilities/**"
     - "04_Shared/40_Knowledge/**"
@@ -72,6 +73,7 @@ read_scope:
     - "99_Agent_Workspace/**"
   client-ceo:
     - "02_Client/**"
+    - "00_Communication/20_Outbox_To_Domains/Client/**"
     - "02_Client/_Inbound/**"
     - "04_Shared/20_Capabilities/**"
     - "04_Shared/40_Knowledge/**"
@@ -79,6 +81,7 @@ read_scope:
     - "99_Agent_Workspace/**"
   venture-ceo:
     - "03_Venture/**"
+    - "00_Communication/20_Outbox_To_Domains/Venture/**"
     - "03_Venture/_Inbound/**"
     - "04_Shared/20_Capabilities/**"
     - "04_Shared/40_Knowledge/**"
