@@ -128,3 +128,33 @@ scheduler:
     ceo_synthesis:  { cron: "0 18 * * *" }
     weekly_reports: { cron: "0 19 * * 0" }
     monthly_report: { cron: "0 19 1 * *" }
+
+# ─────────────────────────────────────────────────────────────
+# Employee scope pattern
+# ─────────────────────────────────────────────────────────────
+#
+# Agents are treated as employees (see EMPLOYEE_MODEL.md). Each
+# employee gets a scope when hired.
+#
+# When an employee is hired, the BOS uses this pattern to generate
+# their entry under `employees:`.
+
+employee_scope_pattern:
+  read_scope:
+    - "02_Client/60_Engagements/{engagement}/**"
+    - "04_Shared/20_Capabilities/{discipline}/**"
+    - "04_Shared/40_Knowledge/**"
+    - "99_Agent_Workspace/**"
+  write_scope:
+    - "02_Client/60_Engagements/{engagement}/10_Projects/{project}/**"
+    - "02_Client/60_Engagements/{engagement}/99_Agents/{name}.log.md"
+    - "99_Agent_Workspace/**"
+  forbidden:
+    - "01_Personal/**"
+    - "04_Shared/00_Governance/**"
+    - "02_Client/60_Engagements/{other_engagement}/**"
+  reports_to: "{engagement}-account-manager"
+  persona: "02_Client/60_Engagements/{engagement}/99_Agents/{name}.md"
+  model: "lfm2.5:8b"
+
+employees: {}

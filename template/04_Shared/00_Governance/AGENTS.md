@@ -133,3 +133,31 @@ Only NomadCoder may amend this file.
 Agents propose via 00_Communication/30_Access_Requests/Pending/.
 
 Version 3.0
+
+## 14. Business OS Modular Structure
+
+The vault follows the Business OS architecture:
+
+**Core (universal to every business):**
+- `00_Communication/` — the airlock
+- `01_Personal/` — private space
+- `02_Client/` — client engagements
+- `03_Venture/` — internal ventures
+- `04_Shared/` — governance, capabilities, knowledge
+- `99_Agent_Workspace/` — runtime, prompts, memory
+
+**Modular (business-specific):**
+- `05_Modules/` — pluggable capabilities (ecom, service, saas, ...)
+- `06_Integrations/` — external service connectors (Zapier, MCP, Stripe, ...)
+
+**Rules:**
+- Modules are optional. Enable only what the business needs.
+- Modules never modify core folders.
+- Integrations never store credentials in the vault.
+- Every module has a `MODULE.md` declaring its scope.
+- Every integration has an `INTEGRATION.md` declaring its config.
+- See `05_Modules/_enabled.md` and `06_Integrations/_enabled.md`.
+
+**Hermes reads these manifests** to know what the enterprise can do.
+
+Version 3.3

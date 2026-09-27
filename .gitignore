@@ -1,12 +1,6 @@
-# System
-.DS_Store
-Thumbs.db
-
-# Backups and artifacts
-*.tar.gz
-*.zip
+# Backup files (created by maintenance scripts)
+*.bak-*
 *.pre-param-*
-*.bak
 
 # Python
 __pycache__/
@@ -15,12 +9,12 @@ __pycache__/
 venv/
 .env
 
+# System
+.DS_Store
+Thumbs.db
+
 # Editors
 .vscode/
 .idea/
 *.swp
 *~
-
-# Local test vaults
-/test-vault/
-/tmp/
