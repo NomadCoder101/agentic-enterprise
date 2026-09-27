@@ -1,225 +1,420 @@
-# Agentic Enterprise
+# Business OS
 
-> A fully local, sovereign, multi-domain AI enterprise running on your own
-> machine. Three isolated agent domains (Personal, Client, Venture) governed
-> by a security kernel that mediates every cross-domain interaction.
-> No cloud. No data leaves your computer.
+> A local-first operating system for running any business with AI agents.
+> No cloud. No subscriptions. Your data stays on your machine.
 
 ---
 
 ## What It Is
 
-Agentic Enterprise turns a single Obsidian vault into a holding company
-run by AI agents:
+**The Business OS is a co-founder.**
 
-- You are the Founder and final decision maker.
-- Three domains -- Personal, Client, Venture -- each with its own CEO-Agent,
-  engineering team, design team, marketing team, and research team.
-- One Communication Agent -- the security kernel that mediates every
-  cross-domain request, enforces policy, and logs every action.
-- One governance layer -- machine-readable policy you edit with a text
-  editor. Change one file, change the whole system's behavior.
-- Full audit log -- every agent action, every access request, every
-  delivery, timestamped and immutable.
+When a founder installs the Business OS, they aren't installing software.
+They're hiring:
 
-It runs entirely on your machine using Ollama for local LLMs. No API keys.
-No subscriptions. No data ever leaves your computer unless you explicitly
-enable paid models.
+- A CEO who asks the hard questions
+- A CFO who tracks whether they're winning
+- A Marketing team who finds customers
+- A Sales team who closes them
+- A Delivery team who ships
+- An R&D team who proposes growth
+- A Risk team who monitors danger
+
+The BOS brings structure, judgment, momentum, memory, and a team the
+founder could not afford to hire. The founder brings an idea, an offer,
+a target, and the willingness to work.
+
+**Together, they build a business.**
+
+This is not a productivity tool. It's not a note-taking app with agents.
+It's the operating system of a real company — one that starts small and
+compounds over time.
+
+The Business OS runs on your machine. It runs on local models or optional
+paid ones. Your data never leaves your computer unless you explicitly
+allow it.
 
 ---
 
-## Who It Is For
+## The Three Layers
 
-- Founders running multiple projects who want one system across all of them.
-- Agencies who want isolated workspaces per client.
-- Individual operators building a second brain that actually does things.
-- Researchers and consultants who need auditability across their work.
+Every Business OS is built from three layers.
+
+### Core (universal)
+
+The same structure for every business:
+
+- **Three domains** — Personal, Client, Venture — each sovereign and
+  isolated
+- **Agents as employees** — names, personas, scopes, histories
+- **Governance** — AGENTS.md, ACCESS_POLICY.yaml, BOS_DOCTRINE.md
+- **Audit log** — every action, timestamped, immutable
+- **Foundation files** — OFFER, KPI, PLAN, MARKET_BRIEF, CRISIS_PLAYBOOK,
+  RISK_REGISTER
+
+The core is the same across a coffee roaster and a SaaS company.
+
+### Modules (business-specific)
+
+Enable only what your business needs:
+
+- **Ecom** — inventory, orders, reorders, fulfillment
+- **Service** — projects, scheduling, quality, retention
+- **SaaS** — subscriptions, onboarding, usage, churn
+- **Marketplace** — matching, escrow, reviews
+- **Consulting** — engagements, deliverables, retainers
+
+Same core. Different configuration.
+
+### Integrations (the hands)
+
+Connect to the outside world:
+
+- **Zapier** — 5,000+ SaaS tools, no code
+- **MCP** — Model Context Protocol servers
+- **Stripe** — payments
+- **Gmail** — email
+- **LinkedIn** — outreach and posting
+
+Hermes decides what to do. Integrations do it in the real world.
+
+---
+
+## Your Team
+
+Agents in the Business OS are employees, not bots.
+
+They have:
+
+- **A name** — Priya, Diego, Sage, Elias. Memorable, human.
+- **A persona** — voice, temperament, working style
+- **A role** — title, specialty, reporting line
+- **A scope** — what they read, write, and cannot touch
+- **A history** — every deliverable, every decision, every escalation
+
+**You hire them by talking.**
+
+You say:
+
+> "I need 2 designers working on social media for Acme. One does posts,
+> one does reels. Add a designer if needed."
+
+The Business OS:
+
+1. Spawns Priya and Diego
+2. Assigns their scopes
+3. Writes their personas
+4. Briefs them
+5. Runs them on the first task
+6. Logs everything
+
+Time: seconds.
+
+Read more: `EMPLOYEE_MODEL.md`
+
+---
+
+## How You Use It
+
+You don't open the Business OS. You talk to it.
+
+### The Daily Rhythm
+
+**Morning (5 min)**
+- Read the daily digest
+- Review the KPI dashboard
+- Respond to escalations
+
+**Midday (15 min)**
+- Review proposals the Sales-Lead drafted
+- Review deliverables the Ops-Lead produced
+- Approve or redirect
+
+**Evening (5 min)**
+- Read the end-of-day summary
+- Set tomorrow's priorities
+
+**Total: ~30 minutes per day.** Everything else is the BOS.
+
+### The Weekly Rhythm
+
+**Monday (30 min)**
+- Read the weekly market brief
+- Review KPI trends
+- Make strategic calls
+
+### The Monthly Rhythm
+
+**1st of the month (2 hours)**
+- Read the CFO's P&L
+- Read the R&D's growth proposal
+- Adjust targets
 
 ---
 
 ## Prerequisites
 
-You need three things installed on your machine before you begin.
+You need four things.
 
 ### 1. Obsidian (the vault viewer)
 
 Download from https://obsidian.md and install for your OS.
 
-Linux (Ubuntu / Debian):
+    # Linux (Ubuntu / Debian)
     sudo snap install obsidian --classic
-Or download the .AppImage from https://obsidian.md and chmod +x it.
 
-macOS:
+    # macOS
     brew install --cask obsidian
 
-Windows:
-    Download the installer from https://obsidian.md.
+### 2. Hermes (the COO)
 
-### 2. Ollama (the local LLM runtime)
+Hermes is the runtime that operates the vault.
 
-Linux / macOS:
-    curl -fsSL https://ollama.com/install.sh | sh
+    curl -fsSL https://nousresearch.com/install.sh | sh
 
-Windows:
-    Download from https://ollama.com/download
-
-Verify it is running:
-    ollama list
-
-If it is not running, start it:
-    ollama serve &
+Or follow the instructions at:
+https://github.com/NousResearch/hermes-agent
 
 ### 3. Python 3.10+
 
-Most systems have this already. Verify:
+Most systems have this. Verify:
+
     python3 --version
 
-If missing:
-    Ubuntu / Debian:
-        sudo apt install python3 python3-pip python3-yaml
-    macOS:
-        brew install python
+### 4. A model provider (optional)
+
+Two options:
+
+- **Local** — https://ollama.com with `qwen2.5:32b` or similar
+- **Cloud** — an https://openrouter.ai API key (free tier available)
+
+Local is fully private. Cloud is faster and more capable. You can switch
+between them.
 
 ---
 
 ## Install
 
-    git clone https://github.com/YOURNAME/agentic-enterprise.git
+    git clone https://github.com/NomadCoder101/agentic-enterprise.git
     cd agentic-enterprise
     ./install.sh
 
 The installer will:
 
 1. Verify prerequisites
-2. Ask you a few questions (enterprise name, your name, vault path)
-3. Pull the required Ollama models (about 5 GB total)
-4. Build your vault
-5. Validate the result
-6. Tell you exactly what to do next
+2. Ask you a few questions (business name, your name, vault path)
+3. Build your vault
+4. Validate the result
+5. Tell you what to do next
 
-Total time: about 5 minutes, mostly model downloads.
+**Total time: about 3 minutes.**
 
----
+Then, install the Hermes integration:
 
-## First Run
-
-After install.sh finishes:
-
-1. Open Obsidian.
-2. Choose "Open folder as vault".
-3. Select the path the installer gave you (for example ~/Desktop/MyEnterprise).
-4. Read 01_Personal/50_Wiki/WELCOME.md -- your operating manual.
-5. Read 04_Shared/00_Governance/AGENTS.md -- the supreme contract.
-
-You now have a full agentic enterprise.
+    # See INSTALL_HERMES.md for full instructions
 
 ---
 
-## Daily Use
+## First Run — The Intake Conversation
 
-You do three things:
+The first time you talk to your CEO, they interview you.
 
-1. Feed the Outbox.
-   Write a brief to 00_Communication/20_Outbox_To_Domains/<domain>/.
-   Example: 00_Communication/20_Outbox_To_Domains/Client/2026-04-12--new-client-website.md
+Not a form. A conversation. Multi-turn. Resumable.
 
-2. Read the Inbox.
-   Every evening: 00_Communication/10_Inbox_From_Domains/
-   and the Daily Digest at 00_Communication/00_Agent/Daily_Digest/YYYY-MM-DD.md
+The CEO asks:
 
-3. Decide.
-   Anything requiring your judgment appears in
-   00_Communication/50_Notifications/.
-   You have 72 hours before the default answer applies.
+1. **What's the business?** — what we sell, to whom
+2. **Who's the customer?** — ICP, geography, pain, trigger
+3. **What's the offer?** — service, price, promise
+4. **What's the proof?** — case studies, credentials, data
+5. **What are the edges?** — what we refuse, minimum engagement
+6. **What are the numbers?** — revenue target, burn, runway
+7. **Where are we going?** — 12-month goal, milestones
+8. **What worries you?** — initial risk register
 
-Total time cost: 15 to 30 minutes per day.
+The CEO writes:
 
----
+- `OFFER.md`
+- `KPI.md`
+- `PLAN.md`
+- `RISK_REGISTER.md`
+- `MARKET_BRIEF.md`
+- `CRISIS_PLAYBOOK.md`
 
-## The Three Domains
+**Your business is now operational.**
 
-Domain        | What it is for                | Can be read by
---------------|-------------------------------|--------------------------------
-01_Personal   | Your private space            | Only you + Personal agents
-02_Client     | Paying client engagements     | Client agents + Audit + you
-03_Venture    | Your own startups/brands      | Venture agents + Audit + you
-
-Client and Venture cannot see each other. Ever.
-
-When any agent needs data from another domain, it writes a request to
-00_Communication/30_Access_Requests/Pending/. The Communication Agent
-evaluates it against your policy, and either approves, denies, or escalates
-to you.
+Read more: `BOS_DOCTRINE.md`
 
 ---
 
-## How to Change Policy
+## The Foundation Files
 
-Open:
+Every Business OS has six foundation files. Every agent reads them.
+Every skill serves them.
 
-    04_Shared/00_Governance/ACCESS_POLICY.yaml
+| File | Answers |
+|------|---------|
+| `OFFER.md` | What we sell, to whom, at what price |
+| `KPI.md` | Are we winning? |
+| `PLAN.md` | How do we get from here to the goal? |
+| `MARKET_BRIEF.md` | What's happening out there? |
+| `CRISIS_PLAYBOOK.md` | What do we do when things go wrong? |
+| `RISK_REGISTER.md` | What could go wrong? |
 
-Edit the rules. Save. The next request uses the new policy. No restarts.
-
-Rules are evaluated top-down. First match wins.
-
-Example -- allow Personal agents to read any Client design files:
-
-    - id: personal-reads-client-design
-      from: personal
-      to: client
-      resource: "02_Client/60_Engagements/*/10_Design/**"
-      action: read
-      verdict: auto_approve
-      reason: "Founder reviews design work."
+Templates live in `04_Shared/10_Strategy/_templates/`.
+Examples (fictional) live in `04_Shared/10_Strategy/examples/`.
+Live versions (yours) live at the root.
 
 ---
 
-## What Is Inside the Vault
+## What's Proven
 
-    MyEnterprise/
-      00_Communication/     the airlock + your interface
-      01_Personal/          your private space
-      02_Client/            paying clients
-      03_Venture/           your own startups/brands
-      04_Shared/            governance, capabilities, knowledge, audit
-      98_Archive/           cold storage
-      99_Agent_Workspace/   agent runtime, prompts, memory
+**v0.3.0** proved the full loop:
 
-Full architecture: docs/ARCHITECTURE.md
-Security model: docs/SECURITY.md
-FAQ: docs/FAQ.md
+- First successful CEO run via Hermes
+- 5 real deliverables produced (design brief, copy, HTML, CSS,
+  status report)
+- Master log entry appended
+- Every action traceable, every write enforceable
+- Fresh clone verified — template structure intact
+
+The system works end-to-end. From chat to deliverables in minutes.
 
 ---
 
-## Backups
+## Known Limitations
 
-Your entire vault is plain Markdown files. Back it up like any other folder.
+Honest about what the Business OS can and cannot do today.
 
-    tar -czf enterprise-backup-$(date +%Y%m%d).tar.gz /path/to/your/vault
+### Local models
 
-Git is also a great backup method:
+- **8–9B local models on CPU** handle single-shot tasks (list files,
+  read a brief) but struggle with multi-step orchestration
+- **32B local models** can orchestrate but are slow on CPU (~1 token/sec)
+- **GPU acceleration** depends on your hardware; older GPUs may not be
+  supported by current Ollama builds
 
-    cd /path/to/your/vault
-    git init && git add . && git commit -m "initial"
+### Model providers
+
+- **OpenRouter free tier** has a 50 requests/day limit
+- **Paid models** work best for production use
+
+### Features
+
+- **Crisis and market skills** are documented but not yet built (Session 6+)
+- **Cron scheduling** and **Telegram gateway** are planned but not yet
+  enabled
+- **Integrations** (Stripe, Gmail, LinkedIn) are placeholders for now
+
+### What the Business OS Does Well
+
+- Reading and writing files in the vault
+- Following the governance doctrine
+- Executing the CEO pattern we proved
+- Logging every action
+- Running agents on specific tasks
 
 ---
 
-## Uninstall
+## The Path Forward
 
-Delete the vault folder. That is it. Nothing is installed system-wide
-except the Ollama models you pulled (remove them with: ollama rm <model>).
+What's next for the Business OS:
+
+**Session 5 — Tier 1 Skills** (current)
+- `enterprise-intake` — the CEO interview
+- `enterprise-status` — business health report
+- `enterprise-run-agent` — execute a domain CEO
+- `enterprise-write-brief` — direct work
+- `enterprise-review` — surface decisions
+- `enterprise-audit` — log + health check
+
+**Session 6 — Automation**
+- Cron scheduling
+- Hook-based event triggers
+- Daily digest delivery
+
+**Session 7 — Interface**
+- Telegram gateway
+- Push notifications
+
+**Session 8+ — Capability**
+- Crisis skills
+- Market skills
+- First module (service or ecom)
+- First integration (Stripe or Gmail)
+
+**Long-term**
+- Multi-business support
+- Cross-business learning
+- White-label deployments
+
+---
+
+## Documentation
+
+Full documentation lives in the vault:
+
+- `BOS_DOCTRINE.md` — the operating model
+- `EMPLOYEE_MODEL.md` — agents as employees
+- `HERMES_INTEGRATION.md` — the Hermes-native operating model
+- `AGENTS.md` — the supreme contract
+- `ORG.md` — the org chart
+- `ACCESS_POLICY.yaml` — the access rules
+
+And in the repo:
+
+- `docs/ARCHITECTURE.md` — the architecture
+- `docs/SECURITY.md` — the security model
+- `docs/FAQ.md` — common questions
+- `docs/AGENTS.md` — agent reference
+
+---
+
+## The Philosophy
+
+**A business exists to make money.** Every skill, every agent, every
+action serves this objective.
+
+**Empty is not quiet.** An empty inbox is not rest — it's a problem.
+The BOS proposes action. It doesn't wait for instructions.
+
+**The founder decides.** The BOS recommends, proposes, and executes.
+But every strategic decision is the founder's.
+
+**Time makes it better.** The Business OS learns your preferences,
+your patterns, your business. Every week it knows you better.
+
+**The founder owns everything.** The vault is plain Markdown. The
+audit log is append-only. The data never leaves your machine unless
+you say so.
 
 ---
 
 ## License
 
-MIT.
+MIT
 
 ## Support
 
-Open an issue on GitHub.
+Open an issue on GitHub:
+https://github.com/NomadCoder101/agentic-enterprise
 
 ## Changelog
 
 See CHANGELOG.md.
+
+---
+
+## The Pitch
+
+**Version 1 — what we do:**
+
+> Run a company by yourself, with AI agents doing the work.
+
+**Version 2 — how you use it:**
+
+> Staff your company with a sentence.
+
+**Version 3 — the category:**
+
+> SaaS is dead. Long live the Business OS.
